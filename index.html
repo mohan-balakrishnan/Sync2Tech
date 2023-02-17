@@ -10,8 +10,8 @@
     <meta content="Sync2tech - Tech Blog Aggregator">
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 </head>
 
@@ -19,27 +19,18 @@
     <div class="container-fluid">
         <main class="row">
             <div class="col">
-                <h1>CSV to HTML Table</h1>
+                <h1>Sync2tech</h1>
 
-                <p>Display any CSV file as a searchable, filterable, pretty HTML table. Done in 100% JavaScript. <a
-                        href="https://github.com/mohan-balakrishnan/csv-to-html-table">Code
-                        on GitHub</a>.</p>
-
+                <!-- <p>Coming soon<a href="https://github.com/mohan-balakrishnan/csv-to-html-table">Code on GitHub</a>.</p> -->
                 </p>
-
                 <div id="table-container"></div>
-                <p>test 2</p>
-                <div id="table-container1"></div>
-                
             </div>
-
-            
         </main>
         <footer class="row">
             <div class="col">
                 <hr>
-                <p class="text-right"><a href="https://github.com/mohan-balakrishnan/csv-to-html-table">CSV to HTML Table</a> by
-                    <a href="#">Sync2tech</a></p>
+                <p class="text-right"><a href="https://github.com/mohan-balakrishnan/csv-to-html-table">Sync2tech</a>
+                </p>
             </div>
         </footer>
     </div>
@@ -60,30 +51,7 @@
         CsvToHtmlTable.init({
             csv_path: "data/Health Clinics in Chicago.csv",
             element: "table-container",
-            allow_download: true,
-            csv_options: {
-                separator: ",",
-                delimiter: '"'
-            },
-            datatables_options: {
-                paging: false
-            },
-            custom_formatting: [
-                [4, format_link]
-            ]
-        });
-    </script>
-    <script>
-        function format_link(link) {
-            if (link)
-                return "<a href='" + link + "' target='_blank'>" + link + "</a>";
-            else return "";
-        }
-
-        CsvToHtmlTable.init({
-            csv_path: "data/Health Clinics in Chicago.csv",
-            element: "table-container1",
-            allow_download: true,
+            allow_download: false,
             csv_options: {
                 separator: ",",
                 delimiter: '"'
