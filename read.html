@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>My Sheet Data</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col text-center mt-5">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="cards-container"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const loader = $('.spinner-border');
+      const cardsContainer = $('#cards-container');
+
+      // Hide cards container and show loader
+      cardsContainer.hide();
+      loader.show();
+
+      // Load CSV file
+      axios.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vQR_OZC38C9n7_MTKSpPnU4dviKhknO2GDhC9jBK7W3PWrvo0qEBJyQuOQtnWd0NSmc7ijpnNbJUkwR/pub?output=csv')
+        .then(function (response) {
+          // Parse CSV data
+          const rows = response.data.split('\n');
+          const headers = rows[0].split(',');
+          const cards = [];
+
+          for (let i = 1; i < rows.length; i++) {
+            const cols = rows[i].split(',');
+            if (cols.length !== headers.length) {
+              continue;
+            }
+
+            const card = {};
+            for (let j = 0; j < headers.length; j++) {
+              card[headers[j]] = cols[j];
+            }
+            cards.push(card);
+          }
+
+          // Render cards
+          for (const card of cards) {
+            const cardHtml = `
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="${card.url}" target="_blank">${card.title}</a></h5>
+                  </div>
+                </div>
+              </div>
+            `;
+            cardsContainer.append(cardHtml);
+          }
+
+          // Hide loader and show cards container
+          loader.hide();
+          cardsContainer.show();
+        })
+        .catch(function (error) {
+          console.error(error);
+
+          // Hide loader and show error message
+          loader.hide();
+          cardsContainer.html('<div class="col text-center"><p>Failed to load data</p></div>');
+          cardsContainer.show();
+        });
+    });
+  </script>
+
+</body>
+
+</html>
